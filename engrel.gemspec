@@ -17,14 +17,13 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
-    ".document",
-    "Gemfile",
-    "LICENSE.txt",
     "README.rdoc",
-    "Rakefile",
     "lib/engrel.rb",
-    "test/helper.rb",
-    "test/test_engrel.rb"
+    "lib/engrel/mixin.rb",
+    "lib/engrel/prepositional_phrase.rb",
+    "lib/engrel/sentence.rb",
+    "lib/generators/engrel_generator.rb",
+    "lib/generators/templates/create_engrel_tables.rb"
   ]
   s.homepage = %q{http://engrel.com}
   s.licenses = ["MIT"]
@@ -41,6 +40,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_runtime_dependency(%q<text-highlight>, [">= 0"])
       s.add_runtime_dependency(%q<enumerated_attribute>, [">= 0"])
@@ -48,8 +48,10 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_development_dependency(%q<utility_belt>, [">= 0"])
+      s.add_runtime_dependency(%q<enumerable_attributes>, ["> 0.1"])
+      s.add_runtime_dependency(%q<active_support>, ["> 3.0.0"])
     else
+      s.add_dependency(%q<activerecord>, [">= 3.0.0"])
       s.add_dependency(%q<activesupport>, [">= 3.0.0"])
       s.add_dependency(%q<text-highlight>, [">= 0"])
       s.add_dependency(%q<enumerated_attribute>, [">= 0"])
@@ -57,9 +59,11 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
-      s.add_dependency(%q<utility_belt>, [">= 0"])
+      s.add_dependency(%q<enumerable_attributes>, ["> 0.1"])
+      s.add_dependency(%q<active_support>, ["> 3.0.0"])
     end
   else
+    s.add_dependency(%q<activerecord>, [">= 3.0.0"])
     s.add_dependency(%q<activesupport>, [">= 3.0.0"])
     s.add_dependency(%q<text-highlight>, [">= 0"])
     s.add_dependency(%q<enumerated_attribute>, [">= 0"])
@@ -67,7 +71,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
-    s.add_dependency(%q<utility_belt>, [">= 0"])
+    s.add_dependency(%q<enumerable_attributes>, ["> 0.1"])
+    s.add_dependency(%q<active_support>, ["> 3.0.0"])
   end
 end
 
