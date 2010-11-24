@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://engrel.com"
   gem.license = "MIT"
   gem.summary = %Q{A highly flexible entity relationship management system that requires only two tables and lots of clever.}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.description = %Q{Allows for natural grammar to specify object relationships based on parts of speech.}
   gem.email = "mlightner@gmail.com"
   gem.authors = ["Matt Lightner"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
