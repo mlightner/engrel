@@ -1,6 +1,50 @@
-= engrel
+= **ENG**lish **REL**ational Framework
 
-Description goes here.
+*A simple and elegant way to specify relations without explicitly making a table for each one.*
+
+*Modify or delete this text in the editor above.*
+
+WMD's context-sensitive commands pack a lot of power into a simple user interface.  Here are some advanced features to try:
+
+== Why use English/Sentences instead of Join Tables?
+
+In a way, we are using join tables--but just one instead of dozens of hundreds.  Normal join tables serve one single purpose--to connect A to B under circumstance C.  Like to link all of the users who were tagged in a specific photo ID.  But if you step back, all that join tables really do is link one object to another with a little bit of context.  Engrel puts the context into the join table and voila, one join table can link any two objects **and** provide (often even more) useful context than a full join table.  No really.
+
+== Prepositional Phrases
+
+Sounds like something only a linguistics professor would care about, but in reality, you use them all the time and they're very helpful in describing relations.  For instance, taking an example from Facebook:
+
+    I was tagged in photo ID 23982930   (technically there's already a preposition there, but watch now)
+    I was tagged in photo ID 23982930 by user ID 850932
+
+More info, right?  And more data is always better, we think.
+
+
+== Console Usage
+
+        irb(main):022:0> s = Engrel::Sentence.claim(User["00002394802384"], :likes, Page["overwerk"])
+        => #<Engrel::Sentence id: 1, subject_id:  00002394802384, subject_type: "User", direct_object_id: 133241766707287, direct_object_type: "Page", verb: "likes", data: nil, created_at: "2010-11-18 18:41:27", updated_at: "2010-11-18 18:41:27">
+
+        irb(main):024:0> s = Engrel::Sentence.claim(User["00002394802384"], :likes, Page["overwerk"])
+        => #<Engrel::Sentence id: 1, subject_id:  00002394802384, subject_type: "User", direct_object_id: 133241766707287, direct_object_type: "Page", verb: "likes", data: nil, created_at: "2010-11-18 18:41:27", updated_at: "2010-11-18 18:41:27">
+
+        irb(main):025:0> s.prep(:via, User["00002394804563"])
+        => #<Engrel::PrepositionalPhrase id: 2, parent_id: 1, parent_type: "Engrel::Sentence", preposition: "via", modifier: nil, indirect_object_id: 00002394804563, indirect_object_type: "User", created_at: "2010-11-18 20:15:39", updated_at: "2010-11-18 20:15:39", started_at: nil, ended_at: nil>
+
+        irb(main):026:0> pp s
+        => #<Engrel::Sentence id: 1, subject_id:  00002394802384, subject_type: "User", direct_object_id: 133241766707287, direct_object_type: "Page", verb: "likes", data: nil, created_at: "2010-11-18 18:41:27", updated_at: "2010-11-18 18:41:27">
+
+        irb(main):027:0> pp s.prepositional_phrases
+        => [#<Engrel::PrepositionalPhrase id: 2, parent_id: 1, parent_type: "Engrel::Sentence", preposition: "via", modifier: nil, indirect_object_id: 00002394804563, indirect_object_type: "User", created_at: "2010-11-18 20:15:39", updated_at: "2010-11-18 20:15:39", started_at: nil, ended_at: nil>]
+
+        irb(main):028:0> pp s.to_sentence
+        => "User[Matt Lightner#00002394802384] likes Page[OVERWERK#133241766707287] via User[Some Friend#00002394804563 indirect_object])
+
+
+== Use with FBGraph
+
+
+This was originally designed to solve a problem I ran into while trying to persist Facebook Graph data, and works well with the fbgraph (not fb_graph) library.  I recommend you check that out too!
 
 == Contributing to engrel
  
@@ -16,4 +60,3 @@ Description goes here.
 
 Copyright (c) 2010 Matt Lightner. See LICENSE.txt for
 further details.
-
