@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'active_support'
 require 'active_record'
 require 'enumerated_attribute'
 require 'engrel/sentence'

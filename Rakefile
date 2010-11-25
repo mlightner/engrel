@@ -25,8 +25,8 @@ Jeweler::Tasks.new do |gem|
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   gem.require_path = 'lib'
   gem.files = %w(MIT-LICENSE README.rdoc) + Dir.glob("{generators,lib,tasks}/**/*")
-  gem.add_runtime_dependency 'enumerable_attributes', '> 0.1'
-  gem.add_runtime_dependency 'active_support', '> 3.0.0'
+  #gem.add_runtime_dependency 'enumerable_attributes', '> 0.1'
+  #gem.add_runtime_dependency 'active_support', '> 3.0.0'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
