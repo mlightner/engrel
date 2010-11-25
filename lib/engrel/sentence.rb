@@ -2,25 +2,31 @@ require 'engrel/mixin'
 require 'engrel/prepositional_phrase'
 
 class Engrel::Sentence < ActiveRecord::Base
+  # This is the main backbone of Engrel.  A sentence is just a has and belongs to many relation with a verb attached that tells you the nature of the relationship.
+  # Prepositional phrases are optional and can make relationships ternary and more specific.  A sentence can have as many prepositional phrases as is appropriate.
+
   include Engrel::Mixin
 
-  # This whole top declaration will need changing if you're not using AR.
+  # NOTE: TO non-AR users--this whole top declaration will need changing if you're not using AR.
+
+  # Set the table name so as not to clash with other tables.
   set_table_name "engrel_sentences"
 
-  # Usually a user, since they're the "actors" in most systems.
+  # Usually a user, since they're the "actors" in most systems.  The "Who" of the sentence.
   belongs_to :subject, :polymorphic => true
 
-  # The thing we're being related with.
+  # The thing we're being related with.  The "What" of the sentence, and the recipieit of theeffect of the transitive verb.
   # http://www.chompchomp.com/terms/directobject.htm
   belongs_to :direct_object, :polymorphic => true
 
-  # Prepositions are stored as children.  Each has an object.
+  # Prepositions are stored as children.  Each has a preposition and an object (i.e. "beside the chair")
   has_many :prepositional_phrases, :uniq => true
 
   # There's obviously the possibility that dynamic accessors could be defined to access these "indirect object" so you could say like sentence.well post if the ternary
   # relation was "Bob posted about Mary on his wall", where the post is the indirect object, mary is the direct object, and Bob is the subject.
   has_many :indirect_objects, :through => :prepositional_phrases
 
+  # The verb.  Specifically a transitive verb (it needs two objects).
   # commented_on: Something comments on a direct_object.
   # likes: Something likes a direct_object object.
   # manages: Something manages a page.
@@ -56,6 +62,7 @@ class Engrel::Sentence < ActiveRecord::Base
   end
 
 
+  # How we make a new sentence while ensuring an existing one doesn't exist.
   def self.claim(subject, verb, direct_object)
     params = {:subject_type => subject.class.to_s, :subject_id => subject[:id], :direct_object_type => direct_object.class.to_s, :direct_object_id => direct_object[:id], :verb => verb.to_s}.stringify_keys
     s = self.where(params).first
@@ -100,8 +107,8 @@ class Engrel::Sentence < ActiveRecord::Base
 
   def prep(prep, indirect_object)
     if self.prepositional_phrases.include?(preposition: prep, indirect_object_id: indirect_object.id, indirect_object_type: indirect_object.class.to_s)
-puts "PREP ALREADY EXISTS!"
-else
+      warn "PREP ALREADY EXISTS!"
+    else
       self.prepositional_phrases.create(preposition: prep, indirect_object: indirect_object)
     end
     self
@@ -117,6 +124,7 @@ else
     sen
   end
 
+  # TODO: Properly strip ANSI color chars
   def to_sentence
     to_sentence_colored
   end
