@@ -124,9 +124,10 @@ class Engrel::Sentence < ActiveRecord::Base
     sen
   end
 
-  # TODO: Properly strip ANSI color chars
   def to_sentence
-    to_sentence_colored
+    # stripping ANSI is just removing from the pair ESC and [ up 
+    # to the lowercase letter m, lazily.
+    to_sentence_colored.gsub(/\x1B\[.*?m/, "");
   end
 end
 

@@ -23,7 +23,7 @@ module Engrel
     alias :fact :sentence
     alias :claim :sentence
 
-    module AciveRecordInstanceMethods
+    module ActiveRecordInstanceMethods
       # Helper method that gets included into AR::Base that allows any model object to specify a relationship between it and any other
       # object (the direct object (they're both polymorphic, of course).
       #
@@ -41,5 +41,5 @@ module Engrel
 end
 
 
-ActiveRecord::Base.send(:include, ::Engrel::Helpers::AciveRecordInstanceMethods) if (defined?(ActiveRecord::Base) rescue false)
+ActiveRecord::Base.send(:include, ::Engrel::Helpers::ActiveRecordInstanceMethods) if (defined?(ActiveRecord::Base) rescue false)
 include ::Engrel::Helpers
